@@ -1,0 +1,110 @@
+# PERSON CLASS (Parent class)
+class Person:
+    def __init__(self, name, surname, birthdate, ID, bplace):
+        self.name = name
+        self.surname = surname
+        self.birthdate = birthdate
+        self.__ID = ID
+        self.bplace = bplace
+
+    # def __str__(self):
+    #     return f"{self.name} {self.surname}"
+    def get_name(self):
+        return self.name
+
+    def get_surname(self):
+        return self.surname
+
+    def get_fullname(self):
+        return f"{self.name} {self.surname}"
+
+    def get_age(self, current_date):
+        return current_date - self.birthdate
+
+    def get_ID(self):
+        return self.__ID
+
+    def get_info(self):
+        return f"""
+        Name: {self.name}
+        Surname: {self.surname}
+        Birthdate: {self.birthdate}
+        Birth place: {self.bplace}
+        ID: {self.__ID}"""
+
+# STUDENT CLASS
+class Talaba(Person):
+    def __init__(self, name, surname, birthdate, ID, bplace, group):
+        super().__init__(name, surname, birthdate, ID, bplace)
+        self.group = group
+    
+    def get_group(self):
+        return self.group
+
+    def get_info(self):
+        return super().get_info()+f"\nGroup: {self.group}"
+
+# TEACHER CLASS
+class Teacher(Person):
+    def __init__(self, name, surname, birthdate, ID, bplace, subject):
+        super().__init__(name, surname, birthdate, ID, bplace)
+        self.subject = subject
+
+    def get_info(self):
+        return super().get_info() + f"Subject: {self.subject}\n"
+
+
+# COURSE CLASS (ENG MUHIM QISM)
+class Course:
+    def __init__(self, course_name, teacher):
+        self.course_name = course_name
+        self.teacher = teacher
+        self.students = []
+    
+    def get_students(self):
+        return self.students
+
+    def add_student(self, student):
+        self.students.append(student)
+
+    def get_course_info(self):
+        print(f"\n Course: {self.course_name}")
+        print(f" Teacher: {self.teacher.get_fullname()}")
+        print(f" Talabalar soni {len(self.students)}")
+        print("\n Students:")
+
+        for s in self.students:
+            print(f"- {s.get_fullname()}")
+
+    def show_full_details(self):
+        print(f"\n========== COURSE DETAILS ==========")
+        print(f"Course: {self.course_name}")
+
+        print("\n--- Teacher Info ---")
+        print(self.teacher.get_info())
+
+        print("\n--- Students Info ---")
+        for talaba in self.students:
+            print(talaba.get_info())
+
+# Students
+talaba1 = Talaba('Sardor', 'Mirzanazarov', 2006, 'AA1234511', 'Bogdod', '55-24 SI')
+talaba2 = Talaba('Ayyubxon', 'Shukurov', 2006, 'AA1234512', 'Qoqon', '56-24 SI')
+talaba3 = Talaba('Abduqodir', 'Xusanov', 2004, 'AA1234567', 'Tashkent', '72-23 Si')
+person0 = Talaba('Abbos', 'Fayzullayev', 2003, 'AA1234568', 'Jizzah', '52-22 KI')
+
+# Teacher
+teacher1 = Teacher("Madina", "Raxmonova", 1998, "TT12345", "South Korea", "Python")
+
+# Course
+python_course = Course("Python", teacher1)
+
+# Connect students to course
+python_course.add_student(talaba1)
+python_course.add_student(talaba2)
+python_course.add_student(talaba3)
+python_course.add_student(person0)
+
+# OUTPUT
+python_course.get_course_info()
+python_course.show_full_details()
